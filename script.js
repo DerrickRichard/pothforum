@@ -1,4 +1,4 @@
-const WEB_APP_URL = "https://script.google.com/a/macros/pothisd.us/s/AKfycbzSvo5n0ELksg-xVljMX8xyDrY2JrWtXgVqZ1BSC0Mkg4snFWappX3A-CZShfVCM3wekQ/exec";
+const WEB_APP_URL = "https://script.google.com/a/macros/pothisd.us/s/AKfycbyMKcyP4JGPH-ZJBYQEypDPtvTQ21Orjpcdj79JbUSBHOSfryXhkltldfqIeUvPcDe3DQ/exec";
 
 function submitPost() {
   const title = document.getElementById("title").value.trim();
