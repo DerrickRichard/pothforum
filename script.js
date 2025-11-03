@@ -19,12 +19,18 @@ function submitPost() {
 
   fetch(WEB_APP_URL, {
     method: "POST",
-    body: JSON.stringify(post),
     headers: {
       "Content-Type": "application/json"
-    }
+    },
+    body: JSON.stringify(post),
+    credentials: "include" // Ensures cookies are sent for domain-authenticated access
   })
-    .then(res => res.text())
+    .then(res => {
+      if (!res.ok) {
+        throw new Error(`Server responded with status ${res.status}`);
+      }
+      return res.text();
+    })
     .then(response => {
       alert("Question submitted!");
       document.getElementById("title").value = "";
@@ -34,13 +40,21 @@ function submitPost() {
     })
     .catch(err => {
       console.error("Error submitting post:", err);
-      alert("Something went wrong. Please try again.");
+      alert("Submission failed. Make sure you're signed in with your school account.");
     });
 }
 
 function loadPosts() {
-  fetch(WEB_APP_URL)
-    .then(res => res.json())
+  fetch(WEB_APP_URL, {
+    method: "GET",
+    credentials: "include"
+  })
+    .then(res => {
+      if (!res.ok) {
+        throw new Error(`Server responded with status ${res.status}`);
+      }
+      return res.json();
+    })
     .then(posts => {
       const postList = document.getElementById("post-list");
       postList.innerHTML = "";
@@ -58,6 +72,7 @@ function loadPosts() {
     })
     .catch(err => {
       console.error("Error loading posts:", err);
+      alert("Failed to load posts. Make sure you're signed in with your school account.");
     });
 }
 
