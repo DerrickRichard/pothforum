@@ -7,6 +7,13 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <script>
+    // Redirect to login if not authenticated
+    if (!localStorage.getItem("forumUser")) {
+      window.location.href = "login.html";
+    }
+  </script>
+
   <header>
     <h1>🎓 Student Forum</h1>
     <p>Ask questions, share answers, and learn together!</p>
@@ -16,14 +23,23 @@
   <main>
     <section id="post-form">
       <h2>Ask a Question</h2>
-      <input type="text" id="title" placeholder="Question Title" required />
-      <textarea id="description" placeholder="Describe your question..." required></textarea>
-      <input type="text" id="tags" placeholder="Tags (comma-separated)" />
-      <button onclick="submitPost()">Submit Question</button>
+      <form id="question-form" onsubmit="event.preventDefault(); submitPost();">
+        <label for="title">Title</label>
+        <input type="text" id="title" placeholder="Question Title" required />
+
+        <label for="description">Description</label>
+        <textarea id="description" placeholder="Describe your question..." required></textarea>
+
+        <label for="tags">Tags</label>
+        <input type="text" id="tags" placeholder="Tags (comma-separated)" />
+
+        <button type="submit">Submit Question</button>
+      </form>
     </section>
 
     <section id="posts">
       <h2>Recent Questions</h2>
+      <div id="loading-message">Loading posts...</div>
       <div id="post-list"></div>
     </section>
   </main>
